@@ -1,0 +1,56 @@
+/**
+ * Created by zhulixiao on 2020/4/28.
+ */
+@import "~@/assets/reset.scss";
+@import "~@/assets/element-theme/mixins/mixins.scss";
+
+html, body {
+  min-width: $--lg;
+  background: $--background-color-base;
+  font-size: $--font-size-base;
+}
+
+body {
+  overflow-x: scroll;
+}
+
+html * {
+  @include scroll-bar;
+}
+
+.color-primary {
+  color: $--color-primary;
+}
+.bg-color-primary {
+  background-color: $--color-primary;
+}
+.color-success {
+  color: $--color-success;
+}
+.bg-color-success {
+  background-color: $--color-success;
+}
+.color-warning {
+  color: $--color-warning;
+}
+.bg-color-warning {
+  background-color: $--color-warning;
+}
+.color-danger {
+  color: $--color-danger;
+}
+.bg-color-danger {
+  background-color: $--color-danger;
+}
+.color-info {
+  color: $--color-info;
+}
+.bg-color-info {
+  background-color: $--color-info;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

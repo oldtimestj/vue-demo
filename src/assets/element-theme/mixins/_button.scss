@@ -1,0 +1,81 @@
+@import "../common/var";
+@mixin button-plain($color, $font-color) {
+  color: $font-color;
+  background: $--color-white;
+  border-color: $color;
+
+  &:hover {
+    background: $--color-white;
+    border-color: mix($--color-black, $color, $--button-hover-tint-percent);
+    color: mix($--color-black, $font-color, $--button-hover-tint-percent);
+  }
+
+  &:active {
+    color: $font-color;
+    background: $--color-white;
+    box-shadow: 0 0 0 2px rgba($color, $--button-active-shadow-opacity);
+    outline: none;
+  }
+
+  &.is-disabled {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      color: mix($--color-white, $font-color, 40%);
+      background-color: mix($--color-white, $color, 90%);
+      border-color: mix($--color-white, $color, 80%);
+      box-shadow: none;
+    }
+  }
+}
+
+@mixin button-variant($color, $background-color, $border-color, $plain-font-color) {
+  color: $color;
+  background-color: $background-color;
+  border-color: $border-color;
+
+  &:hover {
+    background: mix($--color-black, $background-color, $--button-hover-tint-percent);
+    border-color: mix($--color-black, $border-color, $--button-hover-tint-percent);
+    color: $color;
+  }
+  &:active {
+    background-color: $background-color;
+    border-color: $border-color;
+    box-shadow: 0 0 0 2px rgba($border-color, $--button-active-shadow-opacity);
+    color: $color;
+    outline: none;
+  }
+  &.is-active {
+    background: $background-color;
+    border-color: $border-color;
+    box-shadow: 0 0 0 2px rgba($border-color, $--button-active-shadow-opacity);
+    color: $color;
+  }
+
+  &.is-disabled {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      color: $--color-white;
+      background-color: mix($background-color, $--color-white);
+      border-color: mix($background-color, $--color-white);
+      box-shadow: none;
+    }
+  }
+
+  &.is-plain {
+    @include button-plain($background-color, $plain-font-color);
+  }
+}
+
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $border-radius) {
+  padding: $padding-vertical $padding-horizontal;
+  font-size: $font-size;
+  border-radius: $border-radius;
+  &.is-round {
+    padding: $padding-vertical $padding-horizontal;
+  }
+}
