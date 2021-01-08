@@ -1,9 +1,7 @@
 <template>
   <div>
     <div id="myMap"  ref="myMap" style="width: 900px; height: 600px;"></div>
-
-      <el-button size="medium" icon="el-icon-plus"></el-button>
-
+    <el-button size="medium" icon="el-icon-plus"></el-button>
   </div>
 </template>
 <script>

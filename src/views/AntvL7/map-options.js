@@ -17,15 +17,26 @@ export default {
       })
       console.log(currentItem);
       const { basicStatus } = currentItem
-      // 发行人
-      let { compIssuerCount, compBondCount, compDepositAmount } = basicStatus;
+      let { compIssuerCount, compBondCount, compDepositAmount, cropIssuerCount, cropBondCount, cropDepositAmount, absBondCount, absDepositAmount } = basicStatus;
+      // 公司债
       compIssuerCount = compIssuerCount ? compIssuerCount : 0;
       compBondCount = compBondCount ? compBondCount : 0;
       compDepositAmount = compDepositAmount ? compDepositAmount : 0;
+      // 企业债
+      cropIssuerCount = cropIssuerCount ? cropIssuerCount : 0;
+      cropBondCount = cropBondCount ? cropBondCount : 0;
+      cropDepositAmount = cropDepositAmount ? cropDepositAmount : 0;
+      // ABS
+      absBondCount = absBondCount ? absBondCount : 0;
+      absDepositAmount = absDepositAmount ? absDepositAmount : 0;
       return '<div style="height: 175px; width:257px; font-size: 14px;padding-bottom: 7px;margin-bottom: 7px">'
         + currentItem.csrc + '<br>'
         + '公司债' + '<br>'
-        + '发行人: ' + compIssuerCount + '个,' + '债券: ' + compBondCount + '只,' + '余额: ' + compDepositAmount + '亿元'
+        + '发行人: ' + compIssuerCount + '个,' + '债券: ' + compBondCount + '只,' + '余额: ' + compDepositAmount + '亿元' + '<br>'
+        + '企业债' + '<br>'
+        + '发行人: ' + cropIssuerCount + '个,' + '债券: ' + cropBondCount + '只,' + '余额: ' + cropDepositAmount + '亿元' + '<br>'
+        + 'ABS' + '<br>'
+        + '证券: ' + absBondCount + '只,' + '余额: ' + absDepositAmount + '亿元' + '<br>'
         + '</div>'
     }
   },
