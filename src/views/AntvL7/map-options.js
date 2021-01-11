@@ -1,5 +1,13 @@
 import MapData from './map';
-const { resultObject } = MapData;
+import provinceData from './provinceData';
+let { resultObject } = MapData;
+const formatterData = (data) => {
+  return data ? data : 0;
+}
+resultObject = resultObject.map(item => ({
+  ...item,
+  value: formatterData(item.basicStatus?.absDepositAmount) + formatterData(item.basicStatus?.comDepositAmount) + formatterData(item.basicStatus?.corpDepositAmount)
+}))
 export default {
   backgroundColor: '#FFFFFF',
   title: {
@@ -8,39 +16,33 @@ export default {
   },
   tooltip: {
     trigger: 'item',
+    align: 'center',
+    triggerOn: 'mousemove|click',
+    enterable: true,
     formatter: function (obj) {
       let currentItem = null;
-      resultObject.filter(item => {
-        if (item.csrc === obj.name) {
-          currentItem = item;
-        }
-      })
-      console.log(currentItem);
-      const { basicStatus } = currentItem
+      const csrcItem = resultObject.find(mapItem => obj.name.includes(mapItem.csrc));
+      currentItem = provinceData.filter(item => item.name.includes(csrcItem.csrc) || item.name == csrcItem.csrc);
+      const { basicStatus } = csrcItem;
       let { compIssuerCount, compBondCount, compDepositAmount, cropIssuerCount, cropBondCount, cropDepositAmount, absBondCount, absDepositAmount } = basicStatus;
-      // 公司债
-      compIssuerCount = compIssuerCount ? compIssuerCount : 0;
-      compBondCount = compBondCount ? compBondCount : 0;
-      compDepositAmount = compDepositAmount ? compDepositAmount : 0;
-      // 企业债
-      cropIssuerCount = cropIssuerCount ? cropIssuerCount : 0;
-      cropBondCount = cropBondCount ? cropBondCount : 0;
-      cropDepositAmount = cropDepositAmount ? cropDepositAmount : 0;
-      // ABS
-      absBondCount = absBondCount ? absBondCount : 0;
-      absDepositAmount = absDepositAmount ? absDepositAmount : 0;
+      if (currentItem && currentItem[0].children) {
+        return '<div style="height: 25px; width:200px; font-size: 14px;color: black;background-color:white;padding-bottom: 7px;margin-bottom: 7px">'
+          + '<el-button>' + currentItem[0].children[0] + '</el-button>' + '<br>'
+          + currentItem[0].children[1] + '<br>'
+          + '</div>'
+      }
       return '<div style="height: 175px; width:257px; font-size: 14px;padding-bottom: 7px;margin-bottom: 7px">'
-        + currentItem.csrc + '<br>'
+        + csrcItem.csrc + '<br>'
         + '公司债' + '<br>'
-        + '发行人: ' + compIssuerCount + '个,' + '债券: ' + compBondCount + '只,' + '余额: ' + compDepositAmount + '亿元' + '<br>'
+        + '发行人: ' + formatterData(compIssuerCount) + '个,' + '债券: ' + formatterData(compBondCount) + '只,' + '余额: ' + formatterData(compDepositAmount) + '亿元' + '<br>'
         + '企业债' + '<br>'
-        + '发行人: ' + cropIssuerCount + '个,' + '债券: ' + cropBondCount + '只,' + '余额: ' + cropDepositAmount + '亿元' + '<br>'
+        + '发行人: ' + formatterData(cropIssuerCount) + '个,' + '债券: ' + formatterData(cropBondCount) + '只,' + '余额: ' + formatterData(cropDepositAmount) + '亿元' + '<br>'
         + 'ABS' + '<br>'
-        + '证券: ' + absBondCount + '只,' + '余额: ' + absDepositAmount + '亿元' + '<br>'
+        + '证券: ' + formatterData(absBondCount) + '只,' + '余额: ' + formatterData(absDepositAmount) + '亿元' + '<br>'
         + '</div>'
-    }
+    },
   },
-  dataRange: {
+  visualMap: {
     x: 'left',
     y: 'bottom',
     splitList: [
@@ -85,8 +87,8 @@ export default {
     itemStyle: {
       normal: {
         areaColor: '#dff2ff',
-        borderWidth: 2,
-        borderColor: '#ffffff'
+        borderWidth: 1,
+        borderColor: '#b3ebb7'
       },
       // emphasis: {
       //   borderWidth: 0,
@@ -119,198 +121,6 @@ export default {
         borderWidth: 1,
         borderColor: '#ffffff',
       }
-    },
-    data: [
-      {
-        name: '云南省',
-        code: 530000,
-        value: 17881.12,
-      },
-      {
-        name: '黑龙江省',
-        code: 230000,
-        value: 16361.62,
-      },
-      {
-        name: '贵州省',
-        code: 520000,
-        value: 14806.45,
-      },
-      {
-        name: '北京市',
-        code: 110000,
-        value: 30319.98,
-      },
-      {
-        name: '河北省',
-        code: 130000,
-        value: 36010.27,
-      },
-      {
-        name: '山西省',
-        code: 140000,
-        value: 16818.11,
-      },
-      {
-        name: '吉林省',
-        code: 220000,
-        value: 15074,
-      },
-      {
-        name: '宁夏回族自治区',
-        code: 640000,
-        value: 3705.18,
-      },
-      {
-        name: '辽宁省',
-        code: 210000,
-        value: 25315.35,
-        children: [
-          '辽宁省',
-          '大连市',
-        ],
-      },
-      {
-        name: '海南省',
-        code: 460000,
-        value: 4832.05,
-      },
-      {
-        name: '内蒙古自治区',
-        code: 150000,
-        value: 17289.22,
-      },
-      {
-        name: '天津市',
-        code: 120000,
-        value: 18809.64,
-      },
-      {
-        name: '新疆维吾尔自治区',
-        code: 650000,
-        value: 12199.08,
-      },
-      {
-        name: '上海市',
-        code: 310000,
-        value: 32679.87,
-      },
-      {
-        name: '陕西省',
-        code: 610000,
-        value: 24438.32,
-      },
-      {
-        name: '甘肃省',
-        code: 620000,
-        value: 8246.07,
-      },
-      {
-        name: '安徽省',
-        code: 340000,
-        value: 30006.82,
-      },
-      {
-        name: '香港特别行政区',
-        code: 810000,
-        value: 0,
-      },
-      {
-        name: '广东省',
-        code: 440000,
-        value: 97277.77,
-        children: [
-          '广东省',
-          '深圳市',
-        ],
-      },
-      {
-        name: '河南省',
-        code: 410000,
-        value: 48055.86,
-      },
-      {
-        name: '湖南省',
-        code: 430000,
-        value: 36425.78,
-      },
-      {
-        name: '江西省',
-        code: 360000,
-        value: 21984.78,
-      },
-      {
-        name: '四川省',
-        code: 510000,
-        value: 40678.13,
-      },
-      {
-        name: '广西壮族自治区',
-        code: 450000,
-        value: 20353.51,
-      },
-      {
-        name: '江苏省',
-        code: 320000,
-        value: 92595.4,
-      },
-      {
-        name: '澳门特别行政区',
-        code: 820000,
-        value: null,
-      },
-      {
-        name: '浙江省',
-        code: 330000,
-        value: 56197.15,
-        children: [
-          '浙江省',
-          '宁波市',
-        ],
-      },
-      {
-        name: '山东省',
-        code: 370000,
-        value: 76469.67,
-        children: [
-          '山东省',
-          '青岛市',
-        ],
-      },
-      {
-        name: '青海省',
-        code: 630000,
-        value: 2865.23,
-      },
-      {
-        name: '重庆市',
-        code: 500000,
-        value: 20363.19,
-      },
-      {
-        name: '福建省',
-        code: 350000,
-        value: 35804.04,
-        children: [
-          '福建省',
-          '厦门市',
-        ],
-      },
-      {
-        name: '湖北省',
-        code: 420000,
-        value: 39366.55,
-      },
-      {
-        name: '西藏自治区',
-        code: 540000,
-        value: 1477.63,
-      },
-      {
-        name: '台湾省',
-        code: 710000,
-        value: null,
-      },
-    ]
+    }
   }]
 }
